@@ -15,8 +15,8 @@ public class JmsMessageServiceImpl implements JmsMessageService {
     }
 
     @Override
-    public void save(JmsMessage jmsMessage) {
-        this.repository.save(jmsMessage);
+    public JmsMessage save(JmsMessage jmsMessage) {
+        return this.repository.insert(jmsMessage);
     }
 
     @Override

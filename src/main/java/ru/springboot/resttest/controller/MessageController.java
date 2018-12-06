@@ -1,5 +1,7 @@
 package ru.springboot.resttest.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jms.JmsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +12,7 @@ import ru.springboot.resttest.service.JmsService;
 
 @RestController
 public class MessageController {
+    private static final Logger LOG = LoggerFactory.getLogger(MessageController.class);
     private final JmsService jmsService;
     private final JmsMessageService jmsMessageService;
 
@@ -27,7 +30,8 @@ public class MessageController {
         } catch (JmsException e) {
             jmsMessage.setProcessed(false);
         } finally {
-            this.jmsMessageService.save(jmsMessage);
+            JmsMessage newMessage = this.jmsMessageService.save(jmsMessage);
+            LOG.info("Saved message " + newMessage);
         }
     }
 }
